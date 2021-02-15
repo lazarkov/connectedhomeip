@@ -122,8 +122,7 @@
 
 - (void)_clearTextFields
 {
-    CHIPDeviceController * chipController = [CHIPDeviceController sharedController];
-    _nodeIDTextField.text = [NSString stringWithFormat:@"%@", chipController.getControllerNodeId];
+    _nodeIDTextField.text = [NSString stringWithFormat:@"%d", 112233];
     _endpointIDTextField.text = @"1";
     _groupIDTextField.text = @"0";
     _clusterIDTextField.text = @"";
@@ -133,9 +132,7 @@
 
 - (IBAction)bind:(id)sender
 {
-    uint64_t nodeId;
-    NSScanner * scanner = [NSScanner scannerWithString:_nodeIDTextField.text];
-    [scanner scanUnsignedLongLong:&nodeId];
+    int nodeId = [_nodeIDTextField.text intValue];
     int endpointId = [_endpointIDTextField.text intValue];
     int groupId = [_groupIDTextField.text intValue];
     int clusterId = [_clusterIDTextField.text intValue];
