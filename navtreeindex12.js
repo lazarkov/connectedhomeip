@@ -1,6 +1,5 @@
 var NAVTREEINDEX12 =
 {
-"_key_value_store_manager_8h_source.html":[11,0,4,0,8],
 "_lifetime_persisted_counter_8cpp.html":[11,0,6,3,31],
 "_lifetime_persisted_counter_8h.html":[11,0,6,3,32],
 "_lifetime_persisted_counter_8h_source.html":[11,0,6,3,32],
@@ -249,5 +248,6 @@ var NAVTREEINDEX12 =
 "_message_header_8h.html#a5b400de06885a88a19e98ec42610cd78a7998e73fd223f4b48b9b184c5e76b146":[11,0,11,0,2,9,0],
 "_message_header_8h.html#a5b400de06885a88a19e98ec42610cd78aea7fa60ccee398aa3b1a260e044eb153":[11,0,11,0,2,9,2],
 "_message_header_8h.html#a5b400de06885a88a19e98ec42610cd78aeff6d496d87fceb336498361b53cc9f7":[11,0,11,0,2,9,3],
-"_message_header_8h.html#a8480539d9757ec7148d562f0d2e06ac4":[11,0,11,0,2,10]
+"_message_header_8h.html#a8480539d9757ec7148d562f0d2e06ac4":[11,0,11,0,2,10],
+"_message_header_8h.html#a8480539d9757ec7148d562f0d2e06ac4a0ea8589af3fb7586523cc84230f69155":[11,0,11,0,2,10,2]
 };
