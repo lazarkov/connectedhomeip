@@ -34,19 +34,21 @@
 
 #include "Server.h"
 
+#include <iostream>
 #include <support/ErrorStr.h>
 
-#include "include/application-basic/ApplicationBasicManager.h"
-#include "include/endpoint-configuration/EndpointConfigurationStorage.h"
+#include "include/application-launcher/ApplicationLauncherManager.h"
+#include "include/audio-output/AudioOutputManager.h"
+#include "include/content-launcher/ContentLauncherManager.h"
+#include "include/keypad-input/KeypadInputManager.h"
+#include "include/media-input/MediaInputManager.h"
+#include "include/media-playback/MediaPlaybackManager.h"
+#include "include/target-navigator/TargetNavigatorManager.h"
+#include "include/tv-channel/TvChannelManager.h"
 
 using namespace chip;
-using namespace chip::Inet;
 using namespace chip::Transport;
 using namespace chip::DeviceLayer;
-
-void emberAfPostAttributeChangeCallback(EndpointId endpoint, ClusterId clusterId, AttributeId attributeId, uint8_t mask,
-                                        uint16_t manufacturerCode, uint8_t type, uint8_t size, uint8_t * value)
-{}
 
 bool emberAfBasicClusterMfgSpecificPingCallback(void)
 {
@@ -67,8 +69,39 @@ int main(int argc, char * argv[])
     // Init ZCL Data Model and CHIP App Server
     InitServer();
 
-    chip::DeviceLayer::PlatformMgr().RunEventLoop();
+    // Init Keypad Input manager
+    err = KeypadInputManager().Init();
+    SuccessOrExit(err);
 
+    // Init Application Launcher Manager
+    err = ApplicationLauncherManager().Init();
+    SuccessOrExit(err);
+
+    // Init Audio Output Manager
+    err = AudioOutputManager().Init();
+    SuccessOrExit(err);
+
+    // Init Content Launcher Manager
+    err = ContentLauncherManager().Init();
+    SuccessOrExit(err);
+
+    // Init Media Input Manager
+    err = MediaInputManager().Init();
+    SuccessOrExit(err);
+
+    // Init Media Playback Manager
+    err = MediaPlaybackManager().Init();
+    SuccessOrExit(err);
+
+    // Init Target Navigator Manager
+    err = TargetNavigatorManager().Init();
+    SuccessOrExit(err);
+
+    // Init Tv Channel Manager
+    err = TvChannelManager().Init();
+    SuccessOrExit(err);
+
+    chip::DeviceLayer::PlatformMgr().RunEventLoop();
 exit:
     if (err != CHIP_NO_ERROR)
     {
