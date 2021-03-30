@@ -114,7 +114,7 @@ var hierarchy =
     ] ],
     [ "chip::Ble::ChipBLEDeviceIdentificationInfo", "structchip_1_1_ble_1_1_chip_b_l_e_device_identification_info.html", null ],
     [ "chip::Ble::ChipBleUUID", "structchip_1_1_ble_1_1_chip_ble_u_u_i_d.html", null ],
-    [ "chip.ChipCluster.ChipCluster", "classchip_1_1_chip_cluster_1_1_chip_cluster.html", null ],
+    [ "CHIPClusters.ChipClusters", "class_c_h_i_p_clusters_1_1_chip_clusters.html", null ],
     [ "chip.devicecontroller.ChipCommandType", "enumchip_1_1devicecontroller_1_1_chip_command_type.html", null ],
     [ "chip.devicecontroller.ChipDeviceController", "classchip_1_1devicecontroller_1_1_chip_device_controller.html", null ],
     [ "chip::DeviceLayer::ChipDeviceEvent", "structchip_1_1_device_layer_1_1_chip_device_event.html", null ],
@@ -215,6 +215,7 @@ var hierarchy =
       [ "chip.exceptions.ChipStackException", "classchip_1_1exceptions_1_1_chip_stack_exception.html", [
         [ "chip.exceptions.ChipStackError", "classchip_1_1exceptions_1_1_chip_stack_error.html", null ],
         [ "chip.exceptions.ClusterError", "classchip_1_1exceptions_1_1_cluster_error.html", [
+          [ "chip.exceptions.UnknownAttribute", "classchip_1_1exceptions_1_1_unknown_attribute.html", null ],
           [ "chip.exceptions.UnknownCluster", "classchip_1_1exceptions_1_1_unknown_cluster.html", null ],
           [ "chip.exceptions.UnknownCommand", "classchip_1_1exceptions_1_1_unknown_command.html", null ]
         ] ],
@@ -314,6 +315,7 @@ var hierarchy =
     [ "metaclass", null, [
       [ "chip.ChipBleBase.ChipBleBase", "classchip_1_1_chip_ble_base_1_1_chip_ble_base.html", null ]
     ] ],
+    [ "mobile-device-test.MobileDeviceTests", "classmobile-device-test_1_1_mobile_device_tests.html", null ],
     [ "chip::System::Mutex", "classchip_1_1_system_1_1_mutex.html", null ],
     [ "chip.native.NativeLibraryHandleMethodArguments", "classchip_1_1native_1_1_native_library_handle_method_arguments.html", null ],
     [ "chip::NetworkProvisioning", "classchip_1_1_network_provisioning.html", null ],
@@ -325,6 +327,14 @@ var hierarchy =
       [ "ChipDeviceBleScanner", "interface_chip_device_ble_scanner.html", null ],
       [ "FakeBleAdapterInformation", "interface_fake_ble_adapter_information.html", null ],
       [ "UUIDHelper", "interface_u_u_i_d_helper.html", null ]
+    ] ],
+    [ "object", null, [
+      [ "chip.ChipDeviceCtrl.ChipDeviceController", "classchip_1_1_chip_device_ctrl_1_1_chip_device_controller.html", null ],
+      [ "chip.ChipStack.ChipStack", "classchip_1_1_chip_stack_1_1_chip_stack.html", null ],
+      [ "chip.ChipStack.LogCategory", "classchip_1_1_chip_stack_1_1_log_category.html", null ],
+      [ "chip.ChipUtility.ChipUtility", "classchip_1_1_chip_utility_1_1_chip_utility.html", null ],
+      [ "chip.tlv.TLVReader", "classchip_1_1tlv_1_1_t_l_v_reader.html", null ],
+      [ "chip.tlv.TLVWriter", "classchip_1_1tlv_1_1_t_l_v_writer.html", null ]
     ] ],
     [ "chip::System::Object", "classchip_1_1_system_1_1_object.html", [
       [ "chip::Inet::InetLayerBasis", "classchip_1_1_inet_1_1_inet_layer_basis.html", [
@@ -338,14 +348,6 @@ var hierarchy =
         ] ]
       ] ],
       [ "chip::System::Timer", "classchip_1_1_system_1_1_timer.html", null ]
-    ] ],
-    [ "object", null, [
-      [ "chip.ChipDeviceCtrl.ChipDeviceController", "classchip_1_1_chip_device_ctrl_1_1_chip_device_controller.html", null ],
-      [ "chip.ChipStack.ChipStack", "classchip_1_1_chip_stack_1_1_chip_stack.html", null ],
-      [ "chip.ChipStack.LogCategory", "classchip_1_1_chip_stack_1_1_log_category.html", null ],
-      [ "chip.ChipUtility.ChipUtility", "classchip_1_1_chip_utility_1_1_chip_utility.html", null ],
-      [ "chip.tlv.TLVReader", "classchip_1_1tlv_1_1_t_l_v_reader.html", null ],
-      [ "chip.tlv.TLVWriter", "classchip_1_1tlv_1_1_t_l_v_writer.html", null ]
     ] ],
     [ "chip::System::ObjectArena< ALIGN, SIZE >", "unionchip_1_1_system_1_1_object_arena.html", null ],
     [ "chip::System::ObjectArena< void *, N *sizeof(chip::Inet::DNSResolver)>", "unionchip_1_1_system_1_1_object_arena.html", null ],
@@ -504,8 +506,8 @@ var hierarchy =
     [ "chip::SessionEstablishmentDelegate", "classchip_1_1_session_establishment_delegate.html", [
       [ "chip::RendezvousSession", "classchip_1_1_rendezvous_session.html", null ]
     ] ],
-    [ "chip::SetupPayload", "classchip_1_1_setup_payload.html", null ],
     [ "chip.setuppayload.SetupPayload", "classchip_1_1setuppayload_1_1_setup_payload.html", null ],
+    [ "chip::SetupPayload", "classchip_1_1_setup_payload.html", null ],
     [ "chip::SetupPayloadParameter", "structchip_1_1_setup_payload_parameter.html", null ],
     [ "chip.setuppayload.SetupPayloadParser", "classchip_1_1setuppayload_1_1_setup_payload_parser.html", null ],
     [ "chip::Shell::Shell", "classchip_1_1_shell_1_1_shell.html", null ],
@@ -541,6 +543,9 @@ var hierarchy =
     [ "chip::Transport::TcpListenParameters", "classchip_1_1_transport_1_1_tcp_listen_parameters.html", null ],
     [ "chip::test_suites_t", "structchip_1_1test__suites__t.html", null ],
     [ "chip::Mdns::TextEntry", "structchip_1_1_mdns_1_1_text_entry.html", null ],
+    [ "Thread", null, [
+      [ "mobile-device-test.TestTimeout", "classmobile-device-test_1_1_test_timeout.html", null ]
+    ] ],
     [ "chip::DeviceLayer::ConnectivityManager::ThreadPollingConfig", "structchip_1_1_device_layer_1_1_connectivity_manager_1_1_thread_polling_config.html", null ],
     [ "chip::DeviceLayer::ThreadStackManager", "classchip_1_1_device_layer_1_1_thread_stack_manager.html", [
       [ "chip::DeviceLayer::ThreadStackManagerImpl", "classchip_1_1_device_layer_1_1_thread_stack_manager_impl.html", null ]
