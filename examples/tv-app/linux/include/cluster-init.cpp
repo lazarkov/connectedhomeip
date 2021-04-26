@@ -62,13 +62,5 @@ void emberAfApplicationBasicClusterInitCallback(chip::EndpointId endpoint)
  */
 void emberAfWakeOnLanClusterInitCallback(chip::EndpointId endpoint)
 {
-    CHIP_ERROR err                = CHIP_NO_ERROR;
-    WakeOnLanManager & wolManager = WakeOnLanManager::GetInstance();
-    err                           = wolManager.Init();
-    if (CHIP_NO_ERROR == err)
-    {
-        char macAddress[17] = "";
-        wolManager.setMacAddress(endpoint, macAddress);
-        wolManager.store(endpoint, macAddress);
-    }
+    WakeOnLanManager().store(endpoint);
 }

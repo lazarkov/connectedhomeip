@@ -27,7 +27,7 @@
 
 bool LowPowerManager::proxySleepRequest()
 {
-    // TODO: Insert code here
+    system("input keyevent 26");
     return true;
 }
 

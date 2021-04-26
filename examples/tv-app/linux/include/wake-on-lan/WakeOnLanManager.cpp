@@ -35,32 +35,25 @@ using namespace std;
 
 CHIP_ERROR WakeOnLanManager::Init()
 {
-    CHIP_ERROR err                                       = CHIP_NO_ERROR;
-    EndpointConfigurationStorage & endpointConfiguration = EndpointConfigurationStorage::GetInstance();
-    err                                                  = endpointConfiguration.Init();
-    SuccessOrExit(err);
-    es = &endpointConfiguration;
-exit:
+    CHIP_ERROR err = CHIP_NO_ERROR;
+
     return err;
 }
 
-void WakeOnLanManager::store(chip::EndpointId endpoint, char macAddress[17])
+std::string getMacAddress()
 {
-    EmberAfStatus macAddressStatus =
-        emberAfWriteServerAttribute(endpoint, ZCL_WAKE_ON_LAN_CLUSTER_ID, ZCL_WAKE_ON_LAN_MAC_ADDRESS_ATTRIBUTE_ID,
-                                    (uint8_t *) &macAddress, ZCL_CHAR_STRING_ATTRIBUTE_TYPE);
-    assert(macAddressStatus == EMBER_ZCL_STATUS_SUCCESS);
+    std::ifstream input("/sys/class/net/eth0/address");
+    std::string line;
+    std::getline(input, line);
+    return line;
 }
 
-void WakeOnLanManager::setMacAddress(chip::EndpointId endpoint, char * macAddress)
+void WakeOnLanManager::store(chip::EndpointId endpoint)
 {
-    char address[17];
-    uint16_t size = static_cast<uint16_t>(sizeof(address));
-
-    string section = "endpoint" + std::to_string(endpoint);
-    CHIP_ERROR err = es->get(section, "macAddress", macAddress, size);
-    if (err != CHIP_NO_ERROR)
-    {
-        emberAfWakeOnLanClusterPrintln("Failed to get app catalog mac address. ERR:%s", chip::ErrorStr(err));
-    }
+    std::string macAddress = "H" + getMacAddress();
+    ChipLogProgress(Zcl, "mac address: %s, endpoint: %d", macAddress.c_str(), endpoint);
+    EmberAfStatus macAddressStatus =
+        emberAfWriteServerAttribute(endpoint, ZCL_WAKE_ON_LAN_CLUSTER_ID, ZCL_WAKE_ON_LAN_MAC_ADDRESS_ATTRIBUTE_ID, (uint8_t *) &s,
+                                    ZCL_CHAR_STRING_ATTRIBUTE_TYPE);
+    assert(macAddressStatus == EMBER_ZCL_STATUS_SUCCESS);
 }

@@ -53,15 +53,19 @@ EmberAfKeypadInputStatus KeypadInputManager::proxyKeypadInputRequest(EmberAfKeyp
     case EMBER_ZCL_KEYPAD_INPUT_CEC_KEY_CODE_SELECT:
         ChipLogProgress(Zcl, "Execute KEY_CODE_SELECT");
         std::system("input keyevent 66");
+        break;
     case EMBER_ZCL_KEYPAD_INPUT_CEC_KEY_CODE_UP:
         ChipLogProgress(Zcl, "Execute KEY_CODE_UP");
         std::system("input keyevent 19");
+        break;
     case EMBER_ZCL_KEYPAD_INPUT_CEC_KEY_CODE_DOWN:
         ChipLogProgress(Zcl, "Execute KEY_CODE_DOWN");
         std::system("input keyevent 20");
+        break;
     case EMBER_ZCL_KEYPAD_INPUT_CEC_KEY_CODE_LEFT:
         ChipLogProgress(Zcl, "Execute KEY_CODE_LEFT");
         std::system("input keyevent 21");
+        break;
     case EMBER_ZCL_KEYPAD_INPUT_CEC_KEY_CODE_RIGHT:
         ChipLogProgress(Zcl, "Execute EY_CODE_RIGHT");
         std::system("input keyevent 22");
@@ -85,9 +89,10 @@ static void sendResponse(const char * responseName, uint8_t keypadInputStatus)
     }
 }
 
-bool emberAfKeypadInputClusterSendKeyCallback(EmberAfKeypadInputCecKeyCode keyCode)
+bool emberAfKeypadInputClusterSendKeyCallback(unsigned char keyCodeParam)
 {
-    EmberAfKeypadInputStatus status = KeypadInputManager().proxyKeypadInputRequest(keyCode);
+    EmberAfKeypadInputCecKeyCode keyCode = static_cast<EmberAfKeypadInputCecKeyCode>(keyCodeParam);
+    EmberAfKeypadInputStatus status      = KeypadInputManager().proxyKeypadInputRequest(keyCode);
     sendResponse("KeypadInputResponse", status);
     return true;
 }

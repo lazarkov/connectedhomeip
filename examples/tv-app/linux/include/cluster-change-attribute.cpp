@@ -49,7 +49,7 @@ void emberAfPostAttributeChangeCallback(EndpointId endpoint, ClusterId clusterId
 {
     if (clusterId == ZCL_ON_OFF_CLUSTER_ID && attributeId == ZCL_ON_OFF_ATTRIBUTE_ID)
     {
-        ChipLogProgress(Zcl, "Received command for cluster id: %d", clusterId);
+        ChipLogProgress(Zcl, "Received on/off command for cluster id: %d", clusterId);
 
         if (endpoint == 1)
         {
@@ -61,11 +61,5 @@ void emberAfPostAttributeChangeCallback(EndpointId endpoint, ClusterId clusterId
             ChipLogProgress(Zcl, "Execute MUTE_TOGGLE");
             runTvCommand(MuteToggle);
         }
-    }
-
-    if (attributeId != ZCL_ON_OFF_ATTRIBUTE_ID)
-    {
-        ChipLogProgress(Zcl, "Unknown attribute ID: %d", attributeId);
-        return;
     }
 }

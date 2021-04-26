@@ -21,21 +21,9 @@
 #include "af-types.h"
 #include <core/CHIPError.h>
 
-#include "../endpoint-configuration/EndpointConfigurationStorage.h"
-
 class WakeOnLanManager
 {
 public:
     CHIP_ERROR Init();
-    void store(chip::EndpointId endpoint, char macAddress[17]);
-    void setMacAddress(chip::EndpointId endpoint, char * macAddress);
-
-    static WakeOnLanManager & GetInstance()
-    {
-        static WakeOnLanManager instance;
-        return instance;
-    }
-
-private:
-    EndpointConfigurationStorage * es = nullptr;
+    void store(chip::EndpointId endpoint);
 };

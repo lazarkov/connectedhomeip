@@ -31,7 +31,6 @@ chip_data_model("tv-common") {
     "ias-zone-server",
     "identify",
     "identify-client",
-    "level-control",
     "network-commissioning",
     "on-off-server",
     "scenes",

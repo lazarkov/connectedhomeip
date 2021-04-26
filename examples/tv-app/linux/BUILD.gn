@@ -30,6 +30,7 @@ executable("chip-tv-app") {
     "include/audio-output/AudioOutputManager.cpp",
     "include/audio-output/AudioOutputManager.h",
     "include/cluster-init.cpp",
+    "include/cluster-change-attribute.cpp",
     "include/content-launcher/ContentLauncherManager.cpp",
     "include/content-launcher/ContentLauncherManager.h",
     "include/endpoint-configuration/EndpointConfigurationStorage.cpp",
@@ -48,8 +49,8 @@ executable("chip-tv-app") {
     "include/tv-channel/TvChannelManager.h",
     "include/wake-on-lan/WakeOnLanManager.cpp",
     "include/wake-on-lan/WakeOnLanManager.h",
+    "include/level-control/level-control.cpp",
     "main.cpp",
-    "include/on-off-level-control/on-off-level-control.cpp"
   ]
 
   deps = [
