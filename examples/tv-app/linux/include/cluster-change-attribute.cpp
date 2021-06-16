@@ -33,10 +33,10 @@ void runTvCommand(TvCommand command)
     switch (command)
     {
     case PowerToggle:
-        // TODO: Insert your code here to send power toggle command
+        system("input keyevent 26");
         break;
     case MuteToggle:
-        // TODO: Insert your code here to send mute toggle command
+        system("input keyevent 91");
         break;
 
     default:
