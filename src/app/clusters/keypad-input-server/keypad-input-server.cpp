@@ -41,9 +41,9 @@
 #include <app/Command.h>
 #include <app/util/af.h>
 
-bool emberAfKeypadInputClusterSendKeyCallback(chip::app::Command * commandObj, unsigned char)
-{
-    EmberAfStatus status = EMBER_ZCL_STATUS_SUCCESS;
-    emberAfSendImmediateDefaultResponse(status);
-    return true;
-}
+// bool emberAfKeypadInputClusterSendKeyCallback(chip::app::Command * commandObj, unsigned char)
+// {
+//     EmberAfStatus status = EMBER_ZCL_STATUS_SUCCESS;
+//     emberAfSendImmediateDefaultResponse(status);
+//     return true;
+// }

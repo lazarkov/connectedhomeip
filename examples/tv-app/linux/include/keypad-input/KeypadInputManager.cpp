@@ -18,12 +18,14 @@
 
 #include "KeypadInputManager.h"
 
+#include <app/Command.h>
 #include <app/common/gen/attribute-id.h>
 #include <app/common/gen/attribute-type.h>
 #include <app/common/gen/cluster-id.h>
 #include <app/common/gen/command-id.h>
 #include <app/util/af.h>
 #include <app/util/basic-types.h>
+#include <support/CodeUtils.h>
 
 #include <map>
 #include <string>
@@ -76,21 +78,28 @@ EmberAfKeypadInputStatus KeypadInputManager::proxyKeypadInputRequest(EmberAfKeyp
     return EMBER_ZCL_KEYPAD_INPUT_STATUS_SUCCESS;
 }
 
-static void sendResponse(const char * responseName, uint8_t keypadInputStatus)
+static void sendResponse(chip::app::Command * commandObj, const char * responseName, uint8_t keypadInputStatus)
 {
-    emberAfFillExternalBuffer((ZCL_CLUSTER_SPECIFIC_COMMAND | ZCL_FRAME_CONTROL_SERVER_TO_CLIENT), ZCL_KEYPAD_INPUT_CLUSTER_ID,
-                              ZCL_SEND_KEY_RESPONSE_COMMAND_ID, "u", keypadInputStatus);
+    CHIP_ERROR err                         = CHIP_NO_ERROR;
+    chip::app::CommandPathParams cmdParams = { emberAfCurrentEndpoint(), /* group id */ 0, ZCL_KEYPAD_INPUT_CLUSTER_ID,
+                                               ZCL_SEND_KEY_RESPONSE_COMMAND_ID, (chip::app::CommandPathFlags::kEndpointIdValid) };
+    chip::TLV::TLVWriter * writer          = nullptr;
+    SuccessOrExit(err = commandObj->PrepareCommand(&cmdParams));
+    VerifyOrExit((writer = commandObj->GetCommandDataElementTLVWriter()) != nullptr, err = CHIP_ERROR_INCORRECT_STATE);
+    SuccessOrExit(err = writer->Put(chip::TLV::ContextTag(0), keypadInputStatus));
+    SuccessOrExit(err = commandObj->FinishCommand());
 
-    EmberStatus status = emberAfSendResponse();
-    if (status != EMBER_SUCCESS)
+exit:
+    if (err != CHIP_NO_ERROR)
     {
-        emberAfKeypadInputClusterPrintln("Failed to send %s: 0x%X", responseName, status);
+        ChipLogError(Zcl, "Failed to encode response command.");
     }
 }
 
-bool emberAfKeypadInputClusterSendKeyCallback(EmberAfKeypadInputCecKeyCode keyCode)
+bool emberAfKeypadInputClusterSendKeyCallback(chip::app::Command * commandObj, uint8_t keyCode)
 {
-    EmberAfKeypadInputStatus status = KeypadInputManager().proxyKeypadInputRequest(keyCode);
-    sendResponse("KeypadInputResponse", status);
+    EmberAfKeypadInputStatus status =
+        KeypadInputManager().proxyKeypadInputRequest(static_cast<EmberAfKeypadInputCecKeyCode>(keyCode));
+    sendResponse(commandObj, "KeypadInputResponse", status);
     return true;
 }

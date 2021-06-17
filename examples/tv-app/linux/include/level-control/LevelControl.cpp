@@ -18,6 +18,7 @@
 
 #include <app/util/af.h>
 
+#include <app/Command.h>
 #include <app/common/gen/af-structs.h>
 #include <app/common/gen/attribute-id.h>
 #include <app/common/gen/attribute-type.h>
@@ -112,69 +113,69 @@ send_default_response:
     }
 }
 
-bool emberAfLevelControlClusterStepCallback(uint8_t stepMode, uint8_t stepSize, uint16_t transitionTime, uint8_t optionMask,
-                                            uint8_t optionOverride)
+bool emberAfLevelControlClusterStepCallback(chip::app::Command * commandObj, uint8_t stepMode, uint8_t stepSize,
+                                            uint16_t transitionTime, uint8_t optionMask, uint8_t optionOverride)
 {
     stepHandler(ZCL_STEP_COMMAND_ID, stepMode, stepSize, transitionTime, optionMask, optionOverride);
     return true;
 }
 
-bool emberAfLevelControlClusterMoveCallback(unsigned char, unsigned char, unsigned char, unsigned char)
+bool emberAfLevelControlClusterMoveCallback(chip::app::Command * commandObj, uint8_t moveMode, uint8_t rate, uint8_t optionMask,
+                                            uint8_t optionOverride)
 {
     ChipLogProgress(Zcl, "Not supported");
     return true;
 }
 
-bool emberAfLevelControlClusterMoveToLevelCallback(unsigned char, unsigned short, unsigned char, unsigned char)
+bool emberAfLevelControlClusterMoveToLevelCallback(chip::app::Command * commandObj, uint8_t level, uint16_t transitionTime,
+                                                   uint8_t optionMask, uint8_t optionOverride)
 {
     ChipLogProgress(Zcl, "Not supported");
     return true;
 }
 
-bool emberAfLevelControlClusterMoveToLevelWithOnOffCallback(unsigned char, unsigned short)
+bool emberAfLevelControlClusterMoveToLevelWithOnOffCallback(chip::app::Command * commandObj, uint8_t level, uint16_t transitionTime)
 {
     ChipLogProgress(Zcl, "Not supported");
     return true;
 }
 
-bool emberAfLevelControlClusterMoveWithOnOffCallback(unsigned char, unsigned char)
+bool emberAfLevelControlClusterMoveWithOnOffCallback(chip::app::Command * commandObj, uint8_t moveMode, uint8_t rate)
 {
     ChipLogProgress(Zcl, "Not supported");
     return true;
 }
 
-bool emberAfLevelControlClusterStopCallback(unsigned char, unsigned char)
+bool emberAfLevelControlClusterStopCallback(chip::app::Command * commandObj, uint8_t optionMask, uint8_t optionOverride)
 {
     ChipLogProgress(Zcl, "Not supported");
     return true;
 }
 
-bool emberAfLevelControlClusterStopWithOnOffCallback()
+bool emberAfLevelControlClusterStopWithOnOffCallback(chip::app::Command * commandObj)
 {
     ChipLogProgress(Zcl, "Not supported");
     return true;
 }
 
-bool emberAfOnOffClusterLevelControlEffectCallback(unsigned char, bool)
+void emberAfOnOffClusterLevelControlEffectCallback(EndpointId endpoint, bool newValue)
+{
+    ChipLogProgress(Zcl, "Not supported");
+}
+
+void emberAfLevelControlClusterServerInitCallback(EndpointId endpoint)
+{
+    ChipLogProgress(Zcl, "Not supported");
+}
+
+bool emberAfLevelControlClusterStepWithOnOffCallback(chip::app::Command * commandObj, uint8_t stepMode, uint8_t stepSize,
+                                                     uint16_t transitionTime)
 {
     ChipLogProgress(Zcl, "Not supported");
     return true;
 }
 
-bool emberAfLevelControlClusterServerInitCallback(unsigned char)
+void emberAfLevelControlClusterServerTickCallback(EndpointId endpoint)
 {
     ChipLogProgress(Zcl, "Not supported");
-    return true;
-}
-
-bool emberAfLevelControlClusterStepWithOnOffCallback(unsigned char, unsigned char, unsigned short)
-{
-    ChipLogProgress(Zcl, "Not supported");
-    return true;
-}
-
-bool emberAfLevelControlClusterServerTickCallback(unsigned char)
-{
-    ChipLogProgress(Zcl, "Not supported");
-    return true;
 }

@@ -41,9 +41,9 @@
 #include <app/Command.h>
 #include <app/util/af.h>
 
-bool emberAfLowPowerClusterSleepCallback(chip::app::Command * commandObj)
-{
-    EmberAfStatus status = EMBER_ZCL_STATUS_SUCCESS;
-    emberAfSendImmediateDefaultResponse(status);
-    return true;
-}
+// bool emberAfLowPowerClusterSleepCallback(chip::app::Command * commandObj)
+// {
+//     EmberAfStatus status = EMBER_ZCL_STATUS_SUCCESS;
+//     emberAfSendImmediateDefaultResponse(status);
+//     return true;
+// }

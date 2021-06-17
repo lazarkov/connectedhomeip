@@ -18,12 +18,12 @@
 
 #include "LowPowerManager.h"
 
-#include <app/util/af.h>
-
+#include <app/Command.h>
 #include <app/common/gen/attribute-id.h>
 #include <app/common/gen/attribute-type.h>
 #include <app/common/gen/cluster-id.h>
 #include <app/common/gen/command-id.h>
+#include <app/util/af.h>
 
 bool LowPowerManager::proxySleepRequest()
 {
@@ -31,7 +31,7 @@ bool LowPowerManager::proxySleepRequest()
     return true;
 }
 
-bool emberAfLowPowerClusterSleepCallback()
+bool emberAfLowPowerClusterSleepCallback(chip::app::Command * commandObj)
 {
     bool success         = LowPowerManager().proxySleepRequest();
     EmberAfStatus status = success ? EMBER_ZCL_STATUS_SUCCESS : EMBER_ZCL_STATUS_FAILURE;

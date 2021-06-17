@@ -49,14 +49,14 @@ void emberAfPostAttributeChangeCallback(EndpointId endpoint, ClusterId clusterId
 {
     if (clusterId == ZCL_ON_OFF_CLUSTER_ID && attributeId == ZCL_ON_OFF_ATTRIBUTE_ID)
     {
-        ChipLogProgress(Zcl, "Received on/off command for cluster id: %d", clusterId);
+        ChipLogProgress(Zcl, "Received on/off command for cluster id: %d, endpoint id: #", clusterId, endpoint);
 
-        if (endpoint == 0)
+        if (endpoint == 1)
         {
             ChipLogProgress(Zcl, "Execute POWER_TOGGLE");
             runTvCommand(PowerToggle);
         }
-        else if (endpoint == 1)
+        else if (endpoint == 2)
         {
             ChipLogProgress(Zcl, "Execute MUTE_TOGGLE");
             runTvCommand(MuteToggle);
