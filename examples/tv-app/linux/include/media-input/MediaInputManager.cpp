@@ -23,6 +23,12 @@
 #include <string>
 #include <support/CodeUtils.h>
 
+#include "../cluster-util/ClusterManager.h"
+#include <app/common/gen/attribute-id.h>
+#include <app/common/gen/cluster-id.h>
+
+int currentIndex = 0;
+
 CHIP_ERROR MediaInputManager::Init()
 {
     CHIP_ERROR err = CHIP_NO_ERROR;
@@ -37,17 +43,24 @@ exit:
 
 std::vector<EmberAfMediaInputInfo> MediaInputManager::proxyGetInputList()
 {
-    // TODO: Insert code here
     std::vector<EmberAfMediaInputInfo> mediaInputList;
-    int maximumVectorSize = 2;
-    char description[]    = "exampleDescription";
-    char name[]           = "exampleName";
+    int maximumVectorSize = 4;
 
     for (int i = 0; i < maximumVectorSize; ++i)
     {
+        const char * name       = "HDMI";
+        std::string s           = std::to_string(i + 1);
+        const char * inputValue = s.c_str();
+        unsigned long bufferSize = strlen(name) + strlen(inputValue) + 1;
+        char * concatString     = new char[bufferSize];
+
+        // copy strings one and two over to the new buffer:
+        strcpy(concatString, name);
+        strcat(concatString, inputValue);
+
         EmberAfMediaInputInfo mediaInput;
-        mediaInput.description = chip::ByteSpan(chip::Uint8::from_char(description), sizeof(description));
-        mediaInput.name        = chip::ByteSpan(chip::Uint8::from_char(name), sizeof(name));
+        mediaInput.description = chip::ByteSpan(chip::Uint8::from_const_char("TV HDMI Input"), strlen("TV HDMI Input"));
+        mediaInput.name        = chip::ByteSpan(chip::Uint8::from_const_char(concatString), strlen(concatString));
         mediaInput.inputType   = EMBER_ZCL_MEDIA_INPUT_TYPE_HDMI;
         mediaInput.index       = static_cast<uint8_t>(1 + i);
         mediaInputList.push_back(mediaInput);
@@ -58,21 +71,36 @@ std::vector<EmberAfMediaInputInfo> MediaInputManager::proxyGetInputList()
 
 bool mediaInputClusterSelectInput(uint8_t input)
 {
-    // TODO: Insert code here
+    std::system("am start-foreground-service -a android.intent.action.SEND_COMMAND -e data \"{\\\"type\\\": \\\"TV\\\", "
+                "\\\"deviceFunction\\\":\\\"HDMI_3\\\"}\"");
+
+    currentIndex = input;
     return true;
 }
 bool mediaInputClusterShowInputStatus()
 {
-    // TODO: Insert code here
+    EmberAfMediaInputInfo mediaInput;
+    ClusterManager().readAttribute(1, ZCL_MEDIA_INPUT_CLUSTER_ID, ZCL_MEDIA_INPUT_LIST_ATTRIBUTE_ID, (uint8_t *) &mediaInput,
+                                   currentIndex);
+    ChipLogProgress(Zcl, "index: %d", mediaInput.index);
+    ChipLogProgress(Zcl, "inputType: %d", mediaInput.inputType);
+    ChipLogProgress(Zcl, "name: %.*s", static_cast<int>(mediaInput.name.size()), mediaInput.name.data());
+    ChipLogProgress(Zcl, "description: %.*s", static_cast<int>(mediaInput.description.size()), mediaInput.description.data());
     return true;
 }
 bool mediaInputClusterHideInputStatus()
 {
-    // TODO: Insert code here
+    ChipLogProgress(Zcl, "Status is hidden now!");
     return true;
 }
 bool mediaInputClusterRenameInput(uint8_t input, std::string name)
 {
-    // TODO: Insert code here
+    EmberAfMediaInputInfo mediaInput;
+    mediaInput.description = chip::ByteSpan(chip::Uint8::from_const_char("TV HDMI Input"), strlen("TV HDMI Input"));
+    mediaInput.name        = chip::ByteSpan(chip::Uint8::from_const_char(name.c_str()), strlen(name.c_str()));
+    mediaInput.inputType   = EMBER_ZCL_MEDIA_INPUT_TYPE_HDMI;
+    mediaInput.index       = static_cast<uint8_t>(1 + input);
+    ClusterManager().writeAttribute(1, ZCL_MEDIA_INPUT_CLUSTER_ID, ZCL_MEDIA_INPUT_LIST_ATTRIBUTE_ID, (uint8_t *) &mediaInput,
+                                    currentIndex);
     return true;
 }

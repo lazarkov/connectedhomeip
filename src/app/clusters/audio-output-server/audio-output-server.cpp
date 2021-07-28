@@ -28,12 +28,13 @@
 using namespace chip;
 
 bool audioOutputClusterSelectOutput(uint8_t index);
-bool audioOutputClusterRenameOutput(uint8_t index, uint8_t * name);
+bool audioOutputClusterRenameOutput(uint8_t index, std::string name);
 
 bool emberAfAudioOutputClusterRenameOutputCallback(EndpointId endpoint, app::CommandHandler * command, uint8_t index,
                                                    uint8_t * name)
 {
-    bool success         = audioOutputClusterRenameOutput(index, name);
+    std::string nameString(reinterpret_cast<char *>(name));
+    bool success         = audioOutputClusterRenameOutput(index, nameString);
     EmberAfStatus status = success ? EMBER_ZCL_STATUS_SUCCESS : EMBER_ZCL_STATUS_FAILURE;
     emberAfSendImmediateDefaultResponse(status);
     return true;

@@ -64,4 +64,25 @@ public:
 
         return writeAttribute(endpointId, clusterId, attributeId, (uint8_t *) &vectorSize);
     }
+
+    EmberAfStatus readAttribute(chip::EndpointId endpointId, chip::ClusterId clusterId, chip::AttributeId attributeId,
+                                 uint8_t * buffer, int32_t index = -1)
+    {
+        EmberAfAttributeSearchRecord record;
+        record.endpoint         = endpointId;
+        record.clusterId        = clusterId;
+        record.clusterMask      = CLUSTER_MASK_SERVER;
+        record.manufacturerCode = EMBER_AF_NULL_MANUFACTURER_CODE;
+        record.attributeId      = attributeId;
+
+        // When reading or writing a List attribute the 'index' value could have 3 types of values:
+        //  -1: Read/Write the whole list content, including the number of elements in the list
+        //   0: Read/Write the number of elements in the list, represented as a uint16_t
+        //   n: Read/Write the nth element of the list
+        //
+        // Since the first 2 bytes of the attribute are used to store the number of elements, elements indexing starts
+        // at 1. In order to hide this to the rest of the code of this file, the element index is incremented by 1 here.
+        // This also allows calling writeAttribute() with no index arg to mean "write the length".
+        return emAfReadOrWriteAttribute(&record, NULL, buffer, 0, false, index + 1);
+    }
 };

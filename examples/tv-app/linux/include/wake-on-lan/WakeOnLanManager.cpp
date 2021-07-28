@@ -32,6 +32,7 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include <string>
 
 using namespace chip;
 
@@ -46,11 +47,21 @@ exit:
     return err;
 }
 
+std::string getMacAddress()
+{
+    std::ifstream input("/sys/class/net/eth0/address");
+    std::string line;
+    std::getline(input, line);
+    return line;
+}
+
 void WakeOnLanManager::store(chip::EndpointId endpoint, char macAddress[32])
 {
     uint8_t bufferMemory[32];
     MutableByteSpan zclString(bufferMemory);
-    MakeZclCharString(zclString, macAddress);
+    std::string macAddressCppString = getMacAddress();
+    const char * macAddressCString  = macAddressCppString.c_str();
+    MakeZclCharString(zclString, macAddressCString);
     EmberAfStatus macAddressStatus =
         emberAfWriteServerAttribute(endpoint, ZCL_WAKE_ON_LAN_CLUSTER_ID, ZCL_WAKE_ON_LAN_MAC_ADDRESS_ATTRIBUTE_ID,
                                     zclString.data(), ZCL_CHAR_STRING_ATTRIBUTE_TYPE);

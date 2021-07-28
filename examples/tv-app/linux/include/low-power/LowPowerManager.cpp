@@ -17,9 +17,10 @@
  */
 
 #include "LowPowerManager.h"
+#include <stdlib.h>
 
 bool lowPowerClusterSleep()
 {
-    // TODO: Insert code here
+    system("input keyevent 26");
     return true;
 }

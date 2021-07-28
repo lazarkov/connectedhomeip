@@ -23,33 +23,73 @@
 
 using namespace std;
 
+vector<uint16_t> applications;
+
 CHIP_ERROR ApplicationLauncherManager::Init()
 {
     CHIP_ERROR err = CHIP_NO_ERROR;
-
     SuccessOrExit(err);
 exit:
     return err;
 }
 
+void launchApp(uint16_t catalogId)
+{
+    if (catalogId == 22163)
+    {
+        std::system("am start -n com.amazon.tv.legal.notices/.AlexaLegalTermsActivity");
+    }
+    else if (catalogId == 48462)
+    {
+        std::system("am start -n com.amazon.tv.legal.notices/.LegalAndComplianceActivity");
+    }
+    else if (catalogId == 72)
+    {
+        std::system("am start -a com.amazon.device.settings.action.LANGUAGE");
+    }
+    else if (catalogId == 38095)
+    {
+        std::system(
+            "am start "
+            "com.amazon.tv.devicecontrolsettings/com.amazon.tv.devicecontrolsettings.screens.main_menu.OzOobeSettingsActivity");
+    }
+}
+
 vector<uint16_t> ApplicationLauncherManager::proxyGetApplicationList()
 {
-    vector<uint16_t> applications;
-    applications.push_back(123);
-    applications.push_back(456);
+    applications.push_back(22163);
+    applications.push_back(48462);
+    applications.push_back(72);
+    applications.push_back(38095);
     return applications;
 }
 
 ApplicationLauncherResponse applicationLauncherClusterLaunchApp(EmberAfApplicationLauncherApp application, std::string data)
 {
-    // TODO: Insert your code
+    bool appFound     = false;
+    size_t vectorSize = applications.size();
+    for (size_t i = 0; i < vectorSize; ++i)
+    {
+        if (application.catalogVendorId == applications[i])
+        {
+            appFound = true;
+        }
+    }
     ApplicationLauncherResponse response;
-    const char * testData = "data";
-    response.data         = (uint8_t *) testData;
-    response.status       = EMBER_ZCL_APPLICATION_LAUNCHER_STATUS_SUCCESS;
-    // TODO: Update once storing a structure attribute is supported
-    // emberAfWriteServerAttribute(endpoint, ZCL_APPLICATION_LAUNCH_CLUSTER_ID, ZCL_APPLICATION_LAUNCHER_CURRENT_APP_APPLICATION_ID,
-    //                             (uint8_t *) &application, ZCL_STRUCT_ATTRIBUTE_TYPE);
+
+    if (appFound)
+    {
+        launchApp(application.catalogVendorId);
+        const char * testData = "data";
+        response.data         = (uint8_t *) testData;
+        response.status       = EMBER_ZCL_APPLICATION_LAUNCHER_STATUS_SUCCESS;
+    }
+    else
+    {
+        const char * testData = "data";
+        response.data         = (uint8_t *) testData;
+        response.status       = EMBER_ZCL_APPLICATION_LAUNCHER_STATUS_APP_NOT_AVAILABLE;
+    }
 
     return response;
 }

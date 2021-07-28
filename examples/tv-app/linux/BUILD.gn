@@ -17,7 +17,6 @@ import("//build_overrides/chip.gni")
 
 import("${chip_root}/build/chip/tools.gni")
 
-assert(chip_build_tools)
 
 executable("chip-tv-app") {
   sources = [
@@ -40,6 +39,7 @@ executable("chip-tv-app") {
     "include/keypad-input/KeypadInputManager.h",
     "include/low-power/LowPowerManager.cpp",
     "include/low-power/LowPowerManager.h",
+    "include/level-control/LevelControl.cpp",
     "include/media-input/MediaInputManager.cpp",
     "include/media-input/MediaInputManager.h",
     "include/media-playback/MediaPlaybackManager.cpp",

@@ -44,24 +44,40 @@ EmberAfMediaPlaybackStatus MediaPlaybackManager::proxyMediaPlaybackRequest(Media
     switch (mediaPlaybackRequest)
     {
     case MEDIA_PLAYBACK_REQUEST_PLAY:
-    // TODO: Insert code here
+    std::system("input keyevent 85");
+    return EMBER_ZCL_MEDIA_PLAYBACK_STATUS_SUCCESS;
+    break;
     case MEDIA_PLAYBACK_REQUEST_PAUSE:
-    // TODO: Insert code here
+    std::system("input keyevent 85");
+    return EMBER_ZCL_MEDIA_PLAYBACK_STATUS_SUCCESS;
+    break;
     case MEDIA_PLAYBACK_REQUEST_STOP:
-    // TODO: Insert code here
+    std::system("input keyevent 86");
+    return EMBER_ZCL_MEDIA_PLAYBACK_STATUS_SUCCESS;
+    break;
     case MEDIA_PLAYBACK_REQUEST_START_OVER:
     // TODO: Insert code here
     case MEDIA_PLAYBACK_REQUEST_PREVIOUS:
-    // TODO: Insert code here
+    std::system("input keyevent 88");
+    return EMBER_ZCL_MEDIA_PLAYBACK_STATUS_SUCCESS;
+    break;
     case MEDIA_PLAYBACK_REQUEST_NEXT:
-    // TODO: Insert code here
+    std::system("input keyevent 87");
+    return EMBER_ZCL_MEDIA_PLAYBACK_STATUS_SUCCESS;
+    break;
     case MEDIA_PLAYBACK_REQUEST_REWIND:
-    // TODO: Insert code here
+    std::system("input keyevent 89");
+    return EMBER_ZCL_MEDIA_PLAYBACK_STATUS_SUCCESS;
+    break;
     case MEDIA_PLAYBACK_REQUEST_FAST_FORWARD:
-    // TODO: Insert code here
+    std::system("input keyevent 90");
+    return EMBER_ZCL_MEDIA_PLAYBACK_STATUS_SUCCESS;
+    break;
     case MEDIA_PLAYBACK_REQUEST_SKIP_FORWARD:
+    return EMBER_ZCL_MEDIA_PLAYBACK_STATUS_INVALID_STATE_FOR_COMMAND;
     // TODO: Insert code here
     case MEDIA_PLAYBACK_REQUEST_SKIP_BACKWARD:
+    return EMBER_ZCL_MEDIA_PLAYBACK_STATUS_INVALID_STATE_FOR_COMMAND;
     // TODO: Insert code here
     case MEDIA_PLAYBACK_REQUEST_SEEK:
         return EMBER_ZCL_MEDIA_PLAYBACK_STATUS_SUCCESS;

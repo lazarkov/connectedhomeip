@@ -33,10 +33,10 @@ void runTvCommand(TvCommand command)
     switch (command)
     {
     case PowerToggle:
-        // TODO: Insert your code here to send power toggle command
+        system("input keyevent 26");
         break;
     case MuteToggle:
-        // TODO: Insert your code here to send mute toggle command
+        system("input keyevent 91");
         break;
 
     default:
@@ -51,12 +51,12 @@ void emberAfPostAttributeChangeCallback(EndpointId endpoint, ClusterId clusterId
     {
         ChipLogProgress(Zcl, "Received on/off command for cluster id: %d", clusterId);
 
-        if (endpoint == 0)
+        if (endpoint == 1)
         {
             ChipLogProgress(Zcl, "Execute POWER_TOGGLE");
             runTvCommand(PowerToggle);
         }
-        else if (endpoint == 1)
+        else if (endpoint == 2)
         {
             ChipLogProgress(Zcl, "Execute MUTE_TOGGLE");
             runTvCommand(MuteToggle);
