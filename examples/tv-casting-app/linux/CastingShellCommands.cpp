@@ -33,6 +33,17 @@
 #include <lib/support/CHIPMem.h>
 #include <lib/support/CodeUtils.h>
 #include <platform/CHIPDeviceLayer.h>
+#include <CommissionableInit.h>
+
+using namespace chip;
+using namespace chip::DeviceLayer;
+
+namespace {
+    LinuxCommissionableDataProvider gCommissionableDataProvider;
+}
+
+// To hold SPAKE2+ verifier, discriminator, passcode
+// LinuxCommissionableDataProvider gCommissionableDataProvider;
 
 namespace chip {
 namespace Shell {
@@ -202,6 +213,33 @@ static CHIP_ERROR CastingHandler(int argc, char ** argv)
         return Server::GetInstance().SendUserDirectedCommissioningRequest(chip::Transport::PeerAddress::UDP(commissioner, port),
                                                                           id);
     }
+
+    if (strcmp(argv[0], "setpasscode") == 0)
+    {
+        
+        char * eptr;
+        chip::Inet::IPAddress commissioner;
+        chip::Inet::IPAddress::FromString(argv[1], commissioner);
+        uint16_t port = (uint16_t) strtol(argv[2], &eptr, 10);
+
+        Protocols::UserDirectedCommissioning::IdentificationDeclaration id;
+        id.SetCommissionerPasscodeReady(true);
+
+        if (argc > 3)
+        {
+            uint32_t passcode = (uint32_t) strtol(argv[3], &eptr, 10);
+            LinuxDeviceOptions::GetInstance().payload.setUpPINCode = passcode;
+        }
+
+        VerifyOrDie(chip::examples::InitCommissionableDataProvider(gCommissionableDataProvider,
+                                                                   LinuxDeviceOptions::GetInstance()) == CHIP_NO_ERROR);
+
+        DeviceLayer::SetCommissionableDataProvider(&gCommissionableDataProvider);
+
+        Server::GetInstance().SendUserDirectedCommissioningRequest(chip::Transport::PeerAddress::UDP(commissioner, port),
+                                                                          id);
+    }
+
     if (strcmp(argv[0], "testudc") == 0)
     {
         char * eptr;
